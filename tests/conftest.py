@@ -341,6 +341,16 @@ def dunnhumby_retail():
     return y_train.lazy(), X_train.lazy(), y_test.lazy(), X_test.lazy(), fh, freq
 
 
+@pytest.fixture
+def commodities():
+    y = pl.read_parquet("data/commodities.parquet")
+    # entity_col, time_col, target_col = y.columns
+    test_size = 30
+    freq = "1mo"
+    y_train, y_test = train_test_split(test_size)(y)
+    return y_train, y_test, test_size, freq
+
+
 # if __name__ == "__main__":
 # y_train.collect().write_parquet("m5_y_train.parquet")
 # X_train.collect().write_parquet("m5_X_train.parquet")
